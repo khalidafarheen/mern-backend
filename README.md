@@ -124,7 +124,7 @@ This project is licensed under the ISC License.
 
 **Shaik Khalida Farheen**
 - GitHub: [@khalidafarheen](https://github.com/khalidafarheen)
-- LinkedIn: [Your LinkedIn Profile](https://linkedin.com/in/yourprofile)
+- LinkedIn: [Khalida Farheen Shaik](https://www.linkedin.com/in/khalidafarheen-shaik-40a552280)
 
 ## 🙏 Acknowledgments
 
