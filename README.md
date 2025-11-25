@@ -122,9 +122,9 @@ This project is licensed under the ISC License.
 
 ## 👨‍💻 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
+**Shaik Khalida Farheen**
+- GitHub: [@khalidafarheen](https://github.com/khalidafarheen)
+- LinkedIn: [Your LinkedIn Profile](https://linkedin.com/in/yourprofile)
 
 ## 🙏 Acknowledgments
 
