@@ -18,6 +18,8 @@ const reviews = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const ExpressError = require("./utils/ExpressError.js");
 
+
+
 const app = express();
 
 // MongoDB connection
@@ -27,7 +29,7 @@ mongoose.connect(dbUrl)
   .then(() => console.log("✅ Connected to MongoDB Atlas!"))
   .catch(err => console.error("❌ MongoDB Connection Error:", err));
 
-// Middleware and Setup
+// Middleware and View Engine Setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
@@ -35,17 +37,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
+// Session configuration
 const sessionOptions = {
     secret: process.env.SECRET || "mysupersecretcode",
     resave: false,
     saveUninitialized: true,
     cookie: {
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
     },
 };
-
 app.use(session(sessionOptions));
 app.use(flash());
 
@@ -56,7 +58,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Flash Middleware
+// Flash + user in locals middleware
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
@@ -65,27 +67,42 @@ app.use((req, res, next) => {
 });
 
 // Routes
+// Mount routers (DO NOT use :id in app.use)
 app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings", reviews);
 app.use("/", userRouter);
+
 
 // Home Route
 app.get("/", (req, res) => {
-    res.send("Backend is working 🚀");
+    res.render("home.ejs"); // Make sure `views/home.ejs` exists
 });
 
-// Error Handling
-app.all("*", (req, res, next) => {
-    next(new ExpressError(404, "Page Not Found"));
-});
+
+
+// 404 Route
+// app.all("*", (req, res, next) => {
+//     next(new ExpressError(404, "Page Not Found"));
+// });
+
+
+//Error Handler
+// app.use((err, req, res, next) => {
+//     const { statusCode = 500, message = "Something went wrong!" } = err;
+//     res.status(statusCode).render("Error.ejs", { err });
+// });
 
 app.use((err, req, res, next) => {
-    const { statusCode = 500, message = "Something went wrong" } = err;
+    if (res.headersSent) return next(err);
+    const { statusCode = 500, message = "Something went wrong!" } = err;
     res.status(statusCode).render("Error.ejs", { message });
 });
 
+
+
+
 // Start Server
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-    console.log(`🚀 Server is listening on http://localhost:${PORT}`);
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+    console.log(`🚀 Server is running on http://localhost:${port}`);
 });

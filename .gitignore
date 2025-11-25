@@ -1,2 +1,6 @@
-// filepath: /home/rgukt/Documents/MajorProject/.gitignore
+node_modules/
 .env
+.DS_Store
+*.log
+.vscode/
+.idea/

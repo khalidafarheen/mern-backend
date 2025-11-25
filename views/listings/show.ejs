@@ -34,7 +34,7 @@
             <hr />
             <% if(newUser) {%>
             <h4>Leave a review</h4>
-            <form method="post" action="/listings/<%=listing._id%>/reviews" novalidate class="needs-validation">
+            <form method="post" action="/listings" novalidate class="needs-validation">
              <div class="mb-3 mt-3">
                <label for="rating" class="form-label" >Rating</label>
              <fieldset class="starability-slot">
@@ -73,7 +73,7 @@
                <p class="starability-result card-text" data-rating="<%= review.rating%>">Rated: 3stars</p>
                <p class="card-text"><%=review.comment%></p>
       
-                <form class="mb-3" method="POST" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
+                <form class="mb-3" method="POST" action="/listings<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
                 <button class="btn btn-outline-dark">Delete</button>
                 </form>
                 </div>
@@ -81,11 +81,14 @@
                 <% }%>         
       </div>
       <% }%>
-      <div class="col-6 mb-3 ms-0">
-         <h3>Where you'll be</h3>
-         <div id="map" class="map-container"></div>
-      </div>
-   </div>
+     <div class="row justify-content-center">
+  <div class="col-6 mb-3 text-center">
+    <h3>Where you'll be</h3>
+    <div id="map" class="map-container"></div>
+  </div>
+</div>
+
       <script src="/js/map.js">
          </script>
 </body>
+ -->
